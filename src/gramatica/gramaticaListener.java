@@ -1,5 +1,4 @@
 // Generated from gramatica.g4 by ANTLR 4.4
-
 package gramatica;
 
 import org.antlr.v4.runtime.misc.NotNull;

@@ -35,15 +35,15 @@ public class ConstrutorAST {
 		String stmt = st.getText();
 		TerminalNode ids = st.IDENTIFIER();
 		List<ExpressionContext> exps = st.expression();
-		if(stmt.contains("if")){
+		if(stmt.startsWith("if")){
 			return new If(this.visitExp(exps.get(0)), this.visitStatement(st.statement(0)), this.visitStatement(st.statement(1)));
-		}else if(stmt.contains("while")){
+		}else if(stmt.startsWith("while")){
 			return new While(this.visitExp(exps.get(0)), this.visitStatement(st.statement(0)));
 		}else if(ids != null && exps.size() == 2){
 			return new ArrayAssign(new Identifier(ids.getText()), this.visitExp(exps.get(0)), this.visitExp(exps.get(1)));
 		}else if(ids != null && exps.size() == 1){
 			return new Assign(new Identifier(ids.getText()), this.visitExp(exps.get(0)));
-		}else if(stmt.contains("System.out.println")){
+		}else if(stmt.startsWith("System.out.println")){
 			return new Print(this.visitExp(exps.get(0)));
 		}else{
 			return new Block(this.visitStatementList(st.statement()));
@@ -106,11 +106,13 @@ public class ConstrutorAST {
 			}else if(opText.equals("*")){
 				return new Times(e1, e2);
 			}
-		}else if(expList.size() == 2){
+		}else if(text.charAt(0) == '('){
+			return this.visitExp(expList.get(0));
+		}else if(expList.size() == 2 && ids == null){
 			return new ArrayLookup(this.visitExp(expList.get(0)), this.visitExp(expList.get(1)));
-		}else if(expList.size() >= 1 && ids != null){
-			return new Call(this.visitExp(expList.get(0)), new Identifier(ids.getText()), this.visitExpList(expList.get(1)));
-		}else if(expList.size() == 1 && !text.contains("new")){
+		}else if(expList.size() >= 1 && ids != null){		
+			return new Call(this.visitExp(expList.get(0)), new Identifier(ids.getText()), this.visitExpList(expList));
+		}else if(expList.size() == 1 && !text.contains("new") && text.contains("length")){
 			return new ArrayLength(this.visitExp(expList.get(0)));
 		}else if(num != null){
 			return new IntegerLiteral(Integer.parseInt(num.getText()));
@@ -136,10 +138,9 @@ public class ConstrutorAST {
 		
 	}
 
-	private ExpList visitExpList(ExpressionContext ec) {
-		List<ExpressionContext> exps = ec.expression();
+	private ExpList visitExpList(List<ExpressionContext> exps) {
 		ExpList expList = new ExpList();
-		for(int i = 0; i<exps.size();i++){
+		for(int i = 1; i<exps.size();i++){
 			expList.addElement(this.visitExp(exps.get(i)));
 		}
 		return expList;

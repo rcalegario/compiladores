@@ -1,5 +1,4 @@
 // Generated from gramatica.g4 by ANTLR 4.4
-
 package gramatica;
 
 import org.antlr.v4.runtime.atn.*;
@@ -22,14 +21,14 @@ public class gramaticaParser extends Parser {
 		T__29=1, T__28=2, T__27=3, T__26=4, T__25=5, T__24=6, T__23=7, T__22=8, 
 		T__21=9, T__20=10, T__19=11, T__18=12, T__17=13, T__16=14, T__15=15, T__14=16, 
 		T__13=17, T__12=18, T__11=19, T__10=20, T__9=21, T__8=22, T__7=23, T__6=24, 
-		T__5=25, T__4=26, T__3=27, T__2=28, T__1=29, T__0=30, IDENTIFIER=31, INTEGER_LITERAL=32, 
-		OPERAND=33, WS=34;
+		T__5=25, T__4=26, T__3=27, T__2=28, T__1=29, T__0=30, IDENTIFIER=31, OPERAND=32, 
+		INTEGER_LITERAL=33, WS=34;
 	public static final String[] tokenNames = {
 		"<INVALID>", "'main'", "'length'", "'new'", "'true'", "'return'", "'class'", 
 		"'while'", "';'", "'void'", "'{'", "'='", "'extends'", "'}'", "'if'", 
 		"'int'", "'('", "'this'", "','", "'false'", "'.'", "'boolean'", "'System.out.println'", 
 		"'['", "'String'", "']'", "'public'", "'!'", "'static'", "'else'", "')'", 
-		"IDENTIFIER", "INTEGER_LITERAL", "OPERAND", "WS"
+		"IDENTIFIER", "OPERAND", "INTEGER_LITERAL", "WS"
 	};
 	public static final int
 		RULE_goal = 0, RULE_mainClass = 1, RULE_classDeclaration = 2, RULE_varDeclaration = 3, 
@@ -868,26 +867,26 @@ public class gramaticaParser extends Parser {
 		"\u009b\3\2\2\2\u009aq\3\2\2\2\u009ay\3\2\2\2\u009a\u0081\3\2\2\2\u009a"+
 		"\u0087\3\2\2\2\u009a\u008d\3\2\2\2\u009a\u0092\3\2\2\2\u009b\17\3\2\2"+
 		"\2\u009c\u009d\b\t\1\2\u009d\u009e\7\35\2\2\u009e\u00b3\5\20\t\4\u009f"+
-		"\u00b3\7\"\2\2\u00a0\u00b3\7\6\2\2\u00a1\u00b3\7\25\2\2\u00a2\u00b3\7"+
-		"!\2\2\u00a3\u00b3\7\23\2\2\u00a4\u00a5\7\5\2\2\u00a5\u00a6\7\21\2\2\u00a6"+
+		"\u00b3\7#\2\2\u00a0\u00b3\7\6\2\2\u00a1\u00b3\7\25\2\2\u00a2\u00b3\7!"+
+		"\2\2\u00a3\u00b3\7\23\2\2\u00a4\u00a5\7\5\2\2\u00a5\u00a6\7\21\2\2\u00a6"+
 		"\u00a7\7\31\2\2\u00a7\u00a8\5\20\t\2\u00a8\u00a9\7\33\2\2\u00a9\u00b3"+
 		"\3\2\2\2\u00aa\u00ab\7\5\2\2\u00ab\u00ac\7!\2\2\u00ac\u00ad\7\22\2\2\u00ad"+
 		"\u00b3\7 \2\2\u00ae\u00af\7\22\2\2\u00af\u00b0\5\20\t\2\u00b0\u00b1\7"+
 		" \2\2\u00b1\u00b3\3\2\2\2\u00b2\u009c\3\2\2\2\u00b2\u009f\3\2\2\2\u00b2"+
 		"\u00a0\3\2\2\2\u00b2\u00a1\3\2\2\2\u00b2\u00a2\3\2\2\2\u00b2\u00a3\3\2"+
 		"\2\2\u00b2\u00a4\3\2\2\2\u00b2\u00aa\3\2\2\2\u00b2\u00ae\3\2\2\2\u00b3"+
-		"\u00d0\3\2\2\2\u00b4\u00b5\f\17\2\2\u00b5\u00b6\7#\2\2\u00b6\u00cf\5\20"+
-		"\t\20\u00b7\u00b8\f\16\2\2\u00b8\u00b9\7\31\2\2\u00b9\u00ba\5\20\t\2\u00ba"+
-		"\u00bb\7\33\2\2\u00bb\u00cf\3\2\2\2\u00bc\u00bd\f\r\2\2\u00bd\u00be\7"+
-		"\26\2\2\u00be\u00cf\7\4\2\2\u00bf\u00c0\f\f\2\2\u00c0\u00c1\7\26\2\2\u00c1"+
-		"\u00c2\7!\2\2\u00c2\u00cb\7\22\2\2\u00c3\u00c8\5\20\t\2\u00c4\u00c5\7"+
-		"\24\2\2\u00c5\u00c7\5\20\t\2\u00c6\u00c4\3\2\2\2\u00c7\u00ca\3\2\2\2\u00c8"+
-		"\u00c6\3\2\2\2\u00c8\u00c9\3\2\2\2\u00c9\u00cc\3\2\2\2\u00ca\u00c8\3\2"+
-		"\2\2\u00cb\u00c3\3\2\2\2\u00cb\u00cc\3\2\2\2\u00cc\u00cd\3\2\2\2\u00cd"+
-		"\u00cf\7 \2\2\u00ce\u00b4\3\2\2\2\u00ce\u00b7\3\2\2\2\u00ce\u00bc\3\2"+
-		"\2\2\u00ce\u00bf\3\2\2\2\u00cf\u00d2\3\2\2\2\u00d0\u00ce\3\2\2\2\u00d0"+
-		"\u00d1\3\2\2\2\u00d1\21\3\2\2\2\u00d2\u00d0\3\2\2\2\22\26\61\67=QT[ao"+
-		"u\u009a\u00b2\u00c8\u00cb\u00ce\u00d0";
+		"\u00d0\3\2\2\2\u00b4\u00b5\f\17\2\2\u00b5\u00b6\7\"\2\2\u00b6\u00cf\5"+
+		"\20\t\20\u00b7\u00b8\f\16\2\2\u00b8\u00b9\7\31\2\2\u00b9\u00ba\5\20\t"+
+		"\2\u00ba\u00bb\7\33\2\2\u00bb\u00cf\3\2\2\2\u00bc\u00bd\f\r\2\2\u00bd"+
+		"\u00be\7\26\2\2\u00be\u00cf\7\4\2\2\u00bf\u00c0\f\f\2\2\u00c0\u00c1\7"+
+		"\26\2\2\u00c1\u00c2\7!\2\2\u00c2\u00cb\7\22\2\2\u00c3\u00c8\5\20\t\2\u00c4"+
+		"\u00c5\7\24\2\2\u00c5\u00c7\5\20\t\2\u00c6\u00c4\3\2\2\2\u00c7\u00ca\3"+
+		"\2\2\2\u00c8\u00c6\3\2\2\2\u00c8\u00c9\3\2\2\2\u00c9\u00cc\3\2\2\2\u00ca"+
+		"\u00c8\3\2\2\2\u00cb\u00c3\3\2\2\2\u00cb\u00cc\3\2\2\2\u00cc\u00cd\3\2"+
+		"\2\2\u00cd\u00cf\7 \2\2\u00ce\u00b4\3\2\2\2\u00ce\u00b7\3\2\2\2\u00ce"+
+		"\u00bc\3\2\2\2\u00ce\u00bf\3\2\2\2\u00cf\u00d2\3\2\2\2\u00d0\u00ce\3\2"+
+		"\2\2\u00d0\u00d1\3\2\2\2\u00d1\21\3\2\2\2\u00d2\u00d0\3\2\2\2\22\26\61"+
+		"\67=QT[aou\u009a\u00b2\u00c8\u00cb\u00ce\u00d0";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

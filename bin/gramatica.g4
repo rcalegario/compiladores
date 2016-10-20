@@ -35,9 +35,9 @@ expression : expression OPERAND expression
 		   
 IDENTIFIER : ([a-zA-Z]|'_')([a-zA-Z]|'_'|[0-9])* ;
 
-INTEGER_LITERAL : ('-')? [0-9]+;
-
 OPERAND : ('&&'|'<'|'+'|'-'|'*');
+
+INTEGER_LITERAL : ('-')?[0-9]+;
 
 WS : [' \r\n\t']+ -> skip;
 		   
