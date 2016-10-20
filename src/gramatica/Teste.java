@@ -1,5 +1,10 @@
 package gramatica;
 
-public class Teste {
+import java.io.File;
 
+public class Teste {
+	public static void main(String[] args) {
+		File in = new File("");
+		System.out.println(in.getAbsolutePath());
+	}
 }
