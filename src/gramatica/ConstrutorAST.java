@@ -1,5 +1,6 @@
 package gramatica;
 
+import java.beans.Expression;
 import java.util.List;
 
 import org.antlr.v4.runtime.tree.*;
@@ -21,6 +22,32 @@ public class ConstrutorAST {
 			cdList.addElement(this.visitClassDecl(listCD.get(i)));
 		}
 		return cdList;
+	}
+	
+	private MainClass visitMain(MainClassContext mc) {
+		Identifier id1 = new Identifier(mc.IDENTIFIER(0).toString());
+		Identifier id2 = new Identifier(mc.IDENTIFIER(1).toString());
+		Statement stmt = this.visitStatement(mc.statement());
+		return new MainClass(id1, id2, stmt);
+	}
+
+	private Statement visitStatement(StatementContext st) {
+		String stmt = st.getText();
+		TerminalNode ids = st.IDENTIFIER();
+		List<ExpressionContext> exps = st.expression();
+		if(stmt.contains("if")){
+			return new If(this.visitExp(exps.get(0)), this.visitStatement(st.statement(0)), this.visitStatement(st.statement(1)));
+		}else if(stmt.contains("while")){
+			return new While(this.visitExp(exps.get(0)), this.visitStatement(st.statement(0)));
+		}else if(ids != null && exps.size() == 2){
+			return new ArrayAssign(new Identifier(ids.getText()), this.visitExp(exps.get(0)), this.visitExp(exps.get(1)));
+		}else if(ids != null && exps.size() == 1){
+			return new Assign(new Identifier(ids.getText()), this.visitExp(exps.get(0)));
+		}else if(stmt.contains("System.out.println")){
+			return new Print(this.visitExp(exps.get(0)));
+		}else{
+			return new Block(this.visitStatementList(st.statement()));
+		}
 	}
 
 	private ClassDecl visitClassDecl(ClassDeclarationContext cdc) {
@@ -77,9 +104,6 @@ public class ConstrutorAST {
 		return null;
 	}
 
-	private MainClass visitMain(MainClassContext mainClass) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 }

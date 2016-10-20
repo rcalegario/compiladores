@@ -33,7 +33,7 @@ expression : expression ('&&'|'<'|'+'|'-'|'*') expression
 		   | '!' expression
 		   | '(' expression ')';
 		   
-IDENTIFIER : [a-zA-Z]+ ;
+IDENTIFIER : ([a-zA-Z]|'_')([a-zA-Z]|'_'|[0-9])* ;
 
 INTEGER_LITERAL : ('-')? [0-9]+;
 		   
