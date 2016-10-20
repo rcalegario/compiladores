@@ -84,24 +84,99 @@ public class ConstrutorAST {
 		return new MethodDecl(tipoMetodo,nomeMetodo,args,variaveis,statements,exp);
 	}
 
-	private Exp visitExp(ExpressionContext expression) {
-		// TODO Auto-generated method stub
-		return null;
+	private Exp visitExp(ExpressionContext exp) {
+		String text = exp.getText();
+		TerminalNode op = exp.OPERAND();
+		TerminalNode ids = exp.IDENTIFIER();
+		List<ExpressionContext> expList = exp.expression();
+		TerminalNode num = exp.INTEGER_LITERAL();
+		
+		if(op != null){
+			Exp e1 = this.visitExp(expList.get(0));
+			Exp e2 = this.visitExp(expList.get(1));
+			String opText = op.getText();
+			if(opText.equals("&&")){
+				return new And(e1, e2);
+			}else if(opText.equals("<")){
+				return new LessThan(e1, e2);
+			}else if(opText.equals("+")){
+				return new Plus(e1, e2);
+			}else if(opText.equals("-")){
+				return new Minus(e1, e2);
+			}else if(opText.equals("*")){
+				return new Times(e1, e2);
+			}
+		}else if(expList.size() == 2){
+			return new ArrayLookup(this.visitExp(expList.get(0)), this.visitExp(expList.get(1)));
+		}else if(expList.size() >= 1 && ids != null){
+			return new Call(this.visitExp(expList.get(0)), new Identifier(ids.getText()), this.visitExpList(expList.get(1)));
+		}else if(expList.size() == 1 && !text.contains("new")){
+			return new ArrayLength(this.visitExp(expList.get(0)));
+		}else if(num != null){
+			return new IntegerLiteral(Integer.parseInt(num.getText()));
+		}else if(ids != null && !text.contains("new")){
+			return new IdentifierExp(ids.getText());
+		}else if(text.contains("true")){
+			return new True();
+		}else if(text.contains("false")){
+			return new False();
+		}else if(text.contains("this")){
+			return new This();
+		}else if(text.contains("new")){
+			if(expList.size() == 1){
+				return new NewArray(this.visitExp(expList.get(0)));
+			}else{
+				return new NewObject(new Identifier(ids.getText()));
+			}
+		}else if(text.contains("!")){
+			return new Not(this.visitExp(expList.get(0)));
+		}
+			
+		return this.visitExp(expList.get(0));
+		
 	}
 
-	private StatementList visitStatementList(List<StatementContext> statement) {
-		// TODO Auto-generated method stub
-		return null;
+	private ExpList visitExpList(ExpressionContext ec) {
+		List<ExpressionContext> exps = ec.expression();
+		ExpList expList = new ExpList();
+		for(int i = 0; i<exps.size();i++){
+			expList.addElement(this.visitExp(exps.get(i)));
+		}
+		return expList;
+
 	}
 
-	private Type visitType(TypeContext typeContext) {
-		// TODO Auto-generated method stub
-		return null;
+	private StatementList visitStatementList(List<StatementContext> sts) {
+		StatementList stmtList = new StatementList();
+		for(int i = 0; i < sts.size(); i++){
+			stmtList.addElement(this.visitStatement(sts.get(i)));
+		}
+		return stmtList;
 	}
 
-	private VarDeclList visitVarDeclList(List<VarDeclarationContext> varDeclaration) {
-		// TODO Auto-generated method stub
-		return null;
+	private Type visitType(TypeContext tc) {
+		String type = tc.getText();
+		if(type.contains("boolean")){
+			return new BooleanType();
+		}else if(type.contains("int[]")){
+			return new IntArrayType();
+		}else if(type.contains("int")){
+			return new IntegerType();
+		}else{
+			return new IdentifierType(tc.IDENTIFIER().getText());
+		}
+	}
+
+	private VarDeclList visitVarDeclList(List<VarDeclarationContext> listVD) {
+		VarDeclList vdList = new VarDeclList();
+		for(int i = 0; i < listVD.size(); i++){
+			vdList.addElement(this.visitVarDecl(listVD.get(i)));
+		}
+		return vdList;
+	}
+
+	private VarDecl visitVarDecl(VarDeclarationContext vd) {
+		return new VarDecl(this.visitType(vd.type()), new Identifier(vd.IDENTIFIER().getText()));
 	}
 
 	

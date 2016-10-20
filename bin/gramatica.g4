@@ -13,13 +13,13 @@ methodDeclaration : 'public' type IDENTIFIER '(' ( type IDENTIFIER ( ',' type ID
 type : 'int' '[' ']' | 'boolean' | 'int' | IDENTIFIER;
 
 statement : '{' ( statement )* '}'
-		  | 'if' '(' expression ')'
+		  | 'if' '(' expression ')' statement 'else' statement
 		  | 'while' '(' expression ')' statement
 		  | 'System.out.println' '(' expression ')' ';'
 		  | IDENTIFIER '=' expression ';'
 		  | IDENTIFIER '[' expression ']' '=' expression ';';
 		  
-expression : expression ('&&'|'<'|'+'|'-'|'*') expression
+expression : expression OPERAND expression
 		   | expression '[' expression ']'
 		   | expression '.' 'length'
 		   | expression '.' IDENTIFIER '(' ( expression ( ',' expression )* )? ')'
@@ -36,6 +36,10 @@ expression : expression ('&&'|'<'|'+'|'-'|'*') expression
 IDENTIFIER : ([a-zA-Z]|'_')([a-zA-Z]|'_'|[0-9])* ;
 
 INTEGER_LITERAL : ('-')? [0-9]+;
+
+OPERAND : ('&&'|'<'|'+'|'-'|'*');
+
+WS : [' \r\n\t']+ -> skip;
 		   
 
 		   
