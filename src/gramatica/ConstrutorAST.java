@@ -1,6 +1,5 @@
 package gramatica;
 
-import java.beans.Expression;
 import java.util.List;
 
 import org.antlr.v4.runtime.tree.*;
