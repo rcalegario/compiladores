@@ -9,25 +9,6 @@ class Element {
     int Salary ;
     boolean Married ;
 
-    public boolean Init(int v_Age, int v_Salary, boolean v_Married){
-	Age = v_Age ;
-	Salary = v_Salary ;
-	Married = v_Married ;
-	return true ;
-    }
-
-    public int GetAge(){
-	return Age ;
-    }
-    
-    public int GetSalary(){
-	return Salary ;
-    }
-
-    public boolean GetMarried(){
-	return Married ;
-    }
-
     public boolean Equal(Element other){
 	boolean ret_val ;
 	int aux01 ;
@@ -50,6 +31,25 @@ class Element {
 	}
 
 	return ret_val ;
+    }
+
+    public boolean Init(int v_Age, int v_Salary, boolean v_Married){
+	Age = v_Age ;
+	Salary = v_Salary ;
+	Married = v_Married ;
+	return true ;
+    }
+
+    public int GetAge(){
+	return Age ;
+    }
+    
+    public int GetSalary(){
+	return Salary ;
+    }
+
+    public boolean GetMarried(){
+	return Married ;
     }
 
     public boolean Compare(int num1 , int num2){

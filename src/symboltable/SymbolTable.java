@@ -30,6 +30,7 @@ public class SymbolTable {
 		if (containsClass(id))
 			return (Class) hashtable.get(id);
 		else
+			System.out.println("SymbolTable -> " + id);
 			return null;
 	}
 
@@ -58,7 +59,7 @@ public class SymbolTable {
 				}
 			}
 		}
-
+		
 		System.out.println("Variavel " + id + " nao definida no escopo atual");
 		System.exit(0);
 		return null;

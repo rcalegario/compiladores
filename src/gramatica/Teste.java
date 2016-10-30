@@ -10,10 +10,11 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import ast.Program;
 import visitor.BuildSymbolTableVisitor;
 import visitor.PrettyPrintVisitor;
+import visitor.TypeCheckVisitor;
 
 public class Teste {
 	public static void main(String[] args) throws IOException {
-		File in = new File("codigos/LinkedList.txt");
+		File in = new File("codigos/QuickSort.txt");
 		FileInputStream input = new FileInputStream(in);
 		ANTLRInputStream antlr = new ANTLRInputStream(input);
 		gramaticaLexer lexer = new gramaticaLexer(antlr);
@@ -24,6 +25,7 @@ public class Teste {
 		BuildSymbolTableVisitor stVis = new BuildSymbolTableVisitor();
 		prog.accept(stVis);
 		System.out.println("asd");
+		prog.accept(new TypeCheckVisitor(stVis.getSymbolTable()));
 		//PrettyPrintVisitor print = new PrettyPrintVisitor();
 		//prog.accept(print);
 	}

@@ -34,7 +34,7 @@ public class ConstrutorAST {
 		String stmt = st.getText();
 		TerminalNode ids = st.IDENTIFIER();
 		List<ExpressionContext> exps = st.expression();
-		if(stmt.startsWith("if")){
+		if(stmt.startsWith("if(") || stmt.startsWith("if ")){
 			return new If(this.visitExp(exps.get(0)), this.visitStatement(st.statement(0)), this.visitStatement(st.statement(1)));
 		}else if(stmt.startsWith("while")){
 			return new While(this.visitExp(exps.get(0)), this.visitStatement(st.statement(0)));
@@ -105,31 +105,31 @@ public class ConstrutorAST {
 			}else if(opText.equals("*")){
 				return new Times(e1, e2);
 			}
+		}else if(expList.size() >= 1 && ids != null){		
+			return new Call(this.visitExp(expList.get(0)), new Identifier(ids.getText()), this.visitExpList(expList));
 		}else if(text.charAt(0) == '('){
 			return this.visitExp(expList.get(0));
 		}else if(expList.size() == 2 && ids == null){
 			return new ArrayLookup(this.visitExp(expList.get(0)), this.visitExp(expList.get(1)));
-		}else if(expList.size() >= 1 && ids != null){		
-			return new Call(this.visitExp(expList.get(0)), new Identifier(ids.getText()), this.visitExpList(expList));
-		}else if(expList.size() == 1 && !text.contains("new") && text.contains("length")){
+		}else if(expList.size() == 1 && !text.contains("(") && text.contains("length")){
 			return new ArrayLength(this.visitExp(expList.get(0)));
 		}else if(num != null){
 			return new IntegerLiteral(Integer.parseInt(num.getText()));
-		}else if(ids != null && !text.contains("new")){
+		}else if(ids != null && !text.contains("(")){
 			return new IdentifierExp(ids.getText());
 		}else if(text.contains("true")){
 			return new True();
 		}else if(text.contains("false")){
 			return new False();
-		}else if(text.contains("this")){
+		}else if(text.startsWith("this")){
 			return new This();
-		}else if(text.contains("new")){
+		}else if(text.startsWith("new") && (ids != null || expList.size() == 1)){
 			if(expList.size() == 1){
 				return new NewArray(this.visitExp(expList.get(0)));
 			}else{
 				return new NewObject(new Identifier(ids.getText()));
 			}
-		}else if(text.contains("!")){
+		}else if(text.startsWith("!")){
 			return new Not(this.visitExp(expList.get(0)));
 		}
 			
