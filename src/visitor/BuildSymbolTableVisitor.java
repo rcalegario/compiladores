@@ -66,6 +66,10 @@ public class BuildSymbolTableVisitor implements Visitor {
 	// Identifier i1,i2;
 	// Statement s;
 	public void visit(MainClass n) {
+		/*symbolTable.addClass(n.i1.s, null);
+		currClass = symbolTable.getClass(n.i1.s);
+		currClass.addMethod("main", );
+		currMethod = currClass.getMethod(n.i.s);*/
 		n.i1.accept(this);
 		n.i2.accept(this);
 		n.s.accept(this);
@@ -75,6 +79,9 @@ public class BuildSymbolTableVisitor implements Visitor {
 	// VarDeclList vl;
 	// MethodDeclList ml;
 	public void visit(ClassDeclSimple n) {
+		symbolTable.addClass(n.i.s, null);
+		currClass = symbolTable.getClass(n.i.s);
+		currMethod = null;
 		n.i.accept(this);
 		for (int i = 0; i < n.vl.size(); i++) {
 			n.vl.elementAt(i).accept(this);
@@ -89,6 +96,9 @@ public class BuildSymbolTableVisitor implements Visitor {
 	// VarDeclList vl;
 	// MethodDeclList ml;
 	public void visit(ClassDeclExtends n) {
+		symbolTable.addClass(n.i.s, n.j.s);
+		currClass = symbolTable.getClass(n.i.s);
+		currMethod = null;
 		n.i.accept(this);
 		n.j.accept(this);
 		for (int i = 0; i < n.vl.size(); i++) {
@@ -102,6 +112,8 @@ public class BuildSymbolTableVisitor implements Visitor {
 	// Type t;
 	// Identifier i;
 	public void visit(VarDecl n) {
+		if(currMethod == null) currClass.addVar(n.i.s, n.t);
+		else currMethod.addVar(n.i.s, n.t);
 		n.t.accept(this);
 		n.i.accept(this);
 	}
@@ -113,6 +125,8 @@ public class BuildSymbolTableVisitor implements Visitor {
 	// StatementList sl;
 	// Exp e;
 	public void visit(MethodDecl n) {
+		currClass.addMethod(n.i.s, n.t);
+		currMethod = currClass.getMethod(n.i.s);
 		n.t.accept(this);
 		n.i.accept(this);
 		for (int i = 0; i < n.fl.size(); i++) {
@@ -130,17 +144,21 @@ public class BuildSymbolTableVisitor implements Visitor {
 	// Type t;
 	// Identifier i;
 	public void visit(Formal n) {
+		currMethod.addParam(n.i.s, n.t);
 		n.t.accept(this);
 		n.i.accept(this);
 	}
 
 	public void visit(IntArrayType n) {
+		
 	}
 
 	public void visit(BooleanType n) {
+		
 	}
 
 	public void visit(IntegerType n) {
+		
 	}
 
 	// String s;

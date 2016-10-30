@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import ast.Program;
+import visitor.BuildSymbolTableVisitor;
 import visitor.PrettyPrintVisitor;
 
 public class Teste {
@@ -20,7 +21,10 @@ public class Teste {
 		gramaticaParser parser = new gramaticaParser(token);
 		ConstrutorAST ast = new ConstrutorAST();
 		Program prog = ast.visitGoal(parser.goal());
-		PrettyPrintVisitor print = new PrettyPrintVisitor();
-		prog.accept(print);
+		BuildSymbolTableVisitor stVis = new BuildSymbolTableVisitor();
+		prog.accept(stVis);
+		System.out.println("asd");
+		//PrettyPrintVisitor print = new PrettyPrintVisitor();
+		//prog.accept(print);
 	}
 }
