@@ -1,5 +1,7 @@
 package visitor;
 
+import symboltable.Class;
+import symboltable.Method;
 import symboltable.SymbolTable;
 import ast.And;
 import ast.ArrayAssign;
@@ -44,6 +46,9 @@ public class TypeCheckVisitor implements TypeVisitor {
 	TypeCheckVisitor(SymbolTable st) {
 		symbolTable = st;
 	}
+	
+	private Class currClass;
+	private Method currMethod;
 
 	// MainClass m;
 	// ClassDeclList cl;
@@ -68,6 +73,8 @@ public class TypeCheckVisitor implements TypeVisitor {
 	// VarDeclList vl;
 	// MethodDeclList ml;
 	public Type visit(ClassDeclSimple n) {
+		currClass = symbolTable.getClass(n.i.s);
+		currMethod = null;
 		n.i.accept(this);
 		for (int i = 0; i < n.vl.size(); i++) {
 			n.vl.elementAt(i).accept(this);
@@ -83,6 +90,8 @@ public class TypeCheckVisitor implements TypeVisitor {
 	// VarDeclList vl;
 	// MethodDeclList ml;
 	public Type visit(ClassDeclExtends n) {
+		currClass = symbolTable.getClass(n.i.s);
+		currMethod = null;
 		n.i.accept(this);
 		n.j.accept(this);
 		for (int i = 0; i < n.vl.size(); i++) {
@@ -109,6 +118,7 @@ public class TypeCheckVisitor implements TypeVisitor {
 	// StatementList sl;
 	// Exp e;
 	public Type visit(MethodDecl n) {
+		currMethod = currClass.getMethod(n.i.s);
 		n.t.accept(this);
 		n.i.accept(this);
 		for (int i = 0; i < n.fl.size(); i++) {
@@ -133,20 +143,20 @@ public class TypeCheckVisitor implements TypeVisitor {
 	}
 
 	public Type visit(IntArrayType n) {
-		return null;
+		return n;
 	}
 
 	public Type visit(BooleanType n) {
-		return null;
+		return n;
 	}
 
 	public Type visit(IntegerType n) {
-		return null;
+		return n;
 	}
 
 	// String s;
 	public Type visit(IdentifierType n) {
-		return null;
+		return symbolTable.getVarType(currMethod, currClass, n.s);
 	}
 
 	// StatementList sl;
@@ -213,15 +223,17 @@ public class TypeCheckVisitor implements TypeVisitor {
 
 	// Exp e1,e2;
 	public Type visit(Plus n) {
-		n.e1.accept(this);
-		n.e2.accept(this);
+		Type t1 = n.e1.accept(this);
+		Type t2 = n.e2.accept(this);
+		if (t1 instanceof IntegerType && t2 instanceof IntegerType) return new IntegerType();
 		return null;
 	}
 
 	// Exp e1,e2;
 	public Type visit(Minus n) {
-		n.e1.accept(this);
-		n.e2.accept(this);
+		Type t1 = n.e1.accept(this);
+		Type t2 = n.e2.accept(this);
+		if (t1 instanceof IntegerType && t2 instanceof IntegerType) return new IntegerType();
 		return null;
 	}
 
